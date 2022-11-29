@@ -1,9 +1,16 @@
+import Head from 'next/head'
+import { Fragment } from 'react'
 import PostContent from "../../components/post/post-detail.js/post-content"
 import { getSpecificPost, getAllPostFileNames } from '../../helpers/post-util'
 
 export default function PostDetailPage({post}) {
   return (
-   <PostContent post={post} />
+    <Fragment> 
+      <Head>
+        <title>{post.title}</title>
+      </Head>
+      <PostContent post={post} />
+    </Fragment>
   )
 }
 
