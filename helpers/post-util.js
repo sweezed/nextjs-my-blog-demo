@@ -19,8 +19,8 @@ function getData(fileName) {
 export const getAllPostFileNames = () => {
   const workingDir = process.cwd()
   const filePath =  path.join(workingDir, 'posts')
-  const fileNames = fs.readdirSync(filePath, 'utf-8')
-  
+  const fileNames = fs.readdirSync(filePath)
+  console.log('** fileNames:', fileNames)
   return fileNames.map(fileName => fileName.replace('.md', ''))
 }
 
