@@ -7,7 +7,7 @@ function getData(fileName) {
   const fullPath = path.join(process.cwd(), 'posts', markDownFileName)
   const fileContents = fs.readFileSync(fullPath, 'utf-8')
   const { data, content } = matter(fileContents)
-  console.log('** contents', content)
+
   return {
     ...data,
     imgFullPath: `/images/posts/${fileName}/${fileName +'.png'}`,
@@ -20,7 +20,7 @@ export const getAllPostFileNames = () => {
   const workingDir = process.cwd()
   const filePath =  path.join(workingDir, 'posts')
   const fileNames = fs.readdirSync(filePath)
-  console.log('** fileNames:', fileNames)
+
   return fileNames.map(fileName => fileName.replace('.md', ''))
 }
 
