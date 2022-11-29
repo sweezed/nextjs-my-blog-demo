@@ -3,6 +3,22 @@ import { NotificationContext } from '../store/notification_context.js'
 
 import styles from '../styles/contact-form.module.css'
 
+async function callApi(body) {
+  const response = await fetch('/api/contact', {
+    method: 'POST',
+    body: JSON.stringify(body),
+    headers:  {
+      'Content-Type': 'application/json'
+    }
+  })
+  if (!response.ok){
+    const error = await response.json()
+    throw new Error (error.message)
+  }
+
+  return await response.json()
+}
+
 export default function ContactForm() {
   const [body, setBody] = useState({email: '', name: '', message: ''})
   const { setNotification } =useContext(NotificationContext)
@@ -16,27 +32,15 @@ export default function ContactForm() {
     })
   }
 
- const onSendMsgHandler = async (event) => {
+  const onSendMsgHandler = async (event) => {
+    let response
+
     event.preventDefault()
     if (!body.email || !body.name || !body.message) return
 
     setNotification({title: 'Messages', message: 'Sending Message...', status: 'pending'})
-    let response
     try {
-      response = await fetch('/api/contact', {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers:  {
-          'Content-Type': 'application/json'
-        }
-      })
-      if (!response.ok){
-        const error = await response.json()
-        throw new Error (error.message)
-      }
-
-      response = await response.json()
-      
+      response = await callApi(body)
     } catch (error) {
       return setNotification({title: 'Messages', message: error.message, status: 'error'})
     }
