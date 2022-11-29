@@ -49,7 +49,7 @@ export default function ContactForm() {
   }
 
   return (
-    <section className={styles.section}>
+    <section className={styles.contact}>
       <h1>How Can I Help You?</h1>
       <form className={styles.form} onSubmit={onSendMsgHandler}>
       <div className={styles.controls}>
