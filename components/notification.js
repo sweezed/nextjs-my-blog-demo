@@ -6,9 +6,7 @@ import styles from '../styles/notification.module.css'
 
 function Notification() {
   const { notification, setNotification } = useContext(NotificationContext)
-
-  if (!notification) return
-
+  
   const { title, message, status } = notification
 
   useEffect(() => {

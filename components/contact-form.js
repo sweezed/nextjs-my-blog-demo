@@ -46,6 +46,7 @@ export default function ContactForm() {
     }
 
     setNotification({title: 'Messages', message: response.message, status: 'success'})
+    setBody(({email: '', name: '', message: ''}))
   }
 
   return (
