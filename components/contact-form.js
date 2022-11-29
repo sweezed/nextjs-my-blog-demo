@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { NotificationContext } from '../store/notification_context.js'
+
 import styles from '../styles/contact-form.module.css'
 
 export default function ContactForm() {
   const [body, setBody] = useState({email: '', name: '', message: ''})
+  const { setNotification } =useContext(NotificationContext)
 
   const onInputChange = (event) => {
     setBody(prevState => {
@@ -13,17 +16,32 @@ export default function ContactForm() {
     })
   }
 
-  const onSendMsgHandler = (event) => {
+ const onSendMsgHandler = async (event) => {
     event.preventDefault()
     if (!body.email || !body.name || !body.message) return
-    
-    fetch('/api/contact', {
-      method: 'POST',
-      body: JSON.stringify(body),
-      headers:  {
-        'Content-Type': 'application/json'
+
+    setNotification({title: 'Messages', message: 'Sending Message...', status: 'pending'})
+    let response
+    try {
+      response = await fetch('/api/contact', {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers:  {
+          'Content-Type': 'application/json'
+        }
+      })
+      if (!response.ok){
+        const error = await response.json()
+        throw new Error (error.message)
       }
-    })
+
+      response = await response.json()
+      
+    } catch (error) {
+      return setNotification({title: 'Messages', message: error.message, status: 'error'})
+    }
+
+    setNotification({title: 'Messages', message: response.message, status: 'success'})
   }
 
   return (
