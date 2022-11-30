@@ -5,12 +5,17 @@ module.exports = (phase) => {
     return ({
       env: {
         mongodb_username: 'admin',
-        // mongodb_password:  * password will be provided by env local file *
         mongodb_clustername: 'cluster0',
         mongodb_database: 'my_blog'
       }
     })
   }
 
-  // could add other phases below here
+  return {
+    env: {
+      mongodb_username: 'admin',
+      mongodb_clustername: 'cluster0',
+      mongodb_database: 'my_blog'
+    }
+  }
 }
