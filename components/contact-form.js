@@ -13,7 +13,8 @@ async function callApi(body) {
   })
   if (!response.ok){
     const error = await response.json()
-    throw new Error (error.message)
+    const message = error.message
+    throw Error(message)
   }
 
   return await response.json()

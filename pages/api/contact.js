@@ -25,7 +25,7 @@ async function handler(req, res) {
       } catch (error) {
         if (connection?.disconnect) connection.disconnect()
         
-        return res.status(500).json({ message: error })
+        return res.status(500).json({ message: error.message })
       }
     }
     
